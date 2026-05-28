@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecuAuthX Signup Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+</head>
+<body>
+  <div class="flash-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <div class="container">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" />
+      <h1>SecuAuth<span>X</span></h1>
+    </div>
+
+    <form id="signupForm" method="POST" action="{{ url_for('register') }}">
+      <label for="email" class="form-label">EMAIL ADDRESS</label>
+      <input type="email" id="email" name="email" />
+      <div id="email-error" class="error-message hidden">Please enter a valid email address</div>
+
+      <label for="password" class="form-label">ENTER PASSWORD</label>
+      <input type="password" id="password" name="password" autocomplete="off" />
+      
+      <div class="password-requirements">
+        <ul>
+          <li id="req-length">At least 8 characters</li>
+          <li id="req-upper">At least one uppercase letter</li>
+          <li id="req-lower">At least one lowercase letter</li>
+          <li id="req-number">At least one number</li>
+          <li id="req-special">At least one special character</li>
+        </ul>
+      </div>
+
+      <label for="confirm-password" class="form-label">CONFIRM PASSWORD</label>
+      <input type="password" id="confirm-password" name="confirm_password" autocomplete="off" />
+      <div id="confirm-password-error" class="error-message hidden">Passwords do not match</div>
+
+      <button id="signup-button" type="submit" disabled>
+        <span id="signup-text">SIGNUP</span>
+        <span id="signup-spinner" class="spinner hidden"></span>
+      </button>
+
+      <div class="auth-link">
+        <span class="text-grey">Already have an account?</span>
+        <a href="{{ url_for('login') }}">Login here</a>
+      </div>
+    </form>
+  </div>
+
+  <script src="{{ url_for('static', filename='register.js') }}"></script>
+</body>
+</html>

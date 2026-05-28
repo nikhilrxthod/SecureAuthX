@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="dashboard">
+  <div class="flash-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash-message flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <header class="dashboard-header">
+    <div class="logo">SecuAuth<span>X</span></div>
+    <button class="logout-btn" id="logoutBtn">Logout</button>
+  </header>
+  
+  <main class="dashboard-main">
+    <div class="welcome-message">Welcome</div>
+    {% if current_user %}
+      <div class="user-email">Logged in as: {{ current_user.email }}</div>
+    {% endif %}
+  </main>
+
+  <script>
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      window.location.href = "{{ url_for('logout') }}";
+    });
+  </script>
+</body>
+</html>
